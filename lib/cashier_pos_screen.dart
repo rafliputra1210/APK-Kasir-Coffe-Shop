@@ -7,6 +7,8 @@ import 'auth_provider.dart';
 import 'menu_provider.dart';
 import 'shift_provider.dart';
 import 'transaction_provider.dart';
+import 'kitchen_provider.dart';
+import 'kitchen_screen.dart';
 import 'cashier_screen.dart';
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'printer_service.dart';
@@ -365,6 +367,7 @@ class _CashierPOSScreenState extends State<CashierPOSScreen> {
 
                           context.read<TransactionProvider>().addTransaction(newTransaction);
                           context.read<ShiftProvider>().recordTransaction(cart.grandTotal);
+                          context.read<KitchenProvider>().addOrder(newTransaction);
 
                           cart.clearCart();
                           Navigator.pop(context);
@@ -1184,6 +1187,27 @@ class _CashierPOSScreenState extends State<CashierPOSScreen> {
                 icon: const Icon(Icons.history, color: Colors.white),
                 tooltip: 'Riwayat Transaksi',
                 onPressed: () => _showHistoryDialog(context),
+              ),
+              // Layar Dapur (KDS)
+              Consumer<KitchenProvider>(
+                builder: (context, kitchen, _) {
+                  final count = kitchen.pendingOrders.length;
+                  return IconButton(
+                    icon: Badge(
+                      isLabelVisible: count > 0,
+                      label: Text('$count'),
+                      backgroundColor: Colors.deepOrange,
+                      child: const Icon(Icons.soup_kitchen, color: Colors.white),
+                    ),
+                    tooltip: 'Layar Dapur (KDS)',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const KitchenScreen()),
+                      );
+                    },
+                  );
+                },
               ),
               // Toggle Panel Kiri di landscape
               if (canUseLeftPanel && screenWidth < 880)

@@ -5,6 +5,8 @@ import 'manage_cashier_screen.dart';
 import 'manage_menu_screen.dart';
 import 'login_screen.dart';
 import 'dashboard_screen.dart';
+import 'kitchen_provider.dart';
+import 'kitchen_screen.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -79,6 +81,26 @@ class _AdminDashboardState extends State<AdminDashboard> {
         backgroundColor: Colors.brown[700],
         foregroundColor: Colors.white,
         actions: [
+          Consumer<KitchenProvider>(
+            builder: (context, kitchen, _) {
+              final count = kitchen.pendingOrders.length;
+              return IconButton(
+                icon: Badge(
+                  isLabelVisible: count > 0,
+                  label: Text('$count'),
+                  backgroundColor: Colors.deepOrange,
+                  child: const Icon(Icons.soup_kitchen),
+                ),
+                tooltip: 'Layar Dapur (KDS)',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const KitchenScreen()),
+                  );
+                },
+              );
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: OutlinedButton.icon(

@@ -4,6 +4,8 @@ import 'auth_provider.dart';
 import 'login_screen.dart';
 import 'cashier_pos_screen.dart';
 import 'shift_provider.dart';
+import 'kitchen_screen.dart';
+import 'kitchen_provider.dart';
 
 class CashierScreen extends StatefulWidget {
   const CashierScreen({super.key});
@@ -85,6 +87,26 @@ class _CashierScreenState extends State<CashierScreen> {
         backgroundColor: Colors.brown,
         foregroundColor: Colors.white,
         actions: [
+          Consumer<KitchenProvider>(
+            builder: (context, kitchen, _) {
+              final count = kitchen.pendingOrders.length;
+              return IconButton(
+                icon: Badge(
+                  isLabelVisible: count > 0,
+                  label: Text('$count'),
+                  backgroundColor: Colors.deepOrange,
+                  child: const Icon(Icons.soup_kitchen),
+                ),
+                tooltip: 'Layar Dapur (KDS)',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const KitchenScreen()),
+                  );
+                },
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Keluar',

@@ -6,6 +6,7 @@ import 'menu_provider.dart';
 import 'shift_provider.dart';
 import 'transaction_provider.dart';
 import 'login_screen.dart';
+import 'kitchen_provider.dart';
 
 void main() {
   runApp(
@@ -16,6 +17,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => MenuProvider()),
         ChangeNotifierProvider(create: (_) => ShiftProvider()),
         ChangeNotifierProvider(create: (_) => TransactionProvider()),
+        ChangeNotifierProvider(create: (_) => KitchenProvider()),
       ],
       child: const MyApp(),
     ),
