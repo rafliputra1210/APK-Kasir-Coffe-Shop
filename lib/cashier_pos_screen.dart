@@ -225,7 +225,9 @@ class _CashierPOSScreenState extends State<CashierPOSScreen> {
                               ),
                             ),
                             Text(
-                              '(Subtotal: ${formatCurrency.format(cart.subtotal)} • Pajak: ${formatCurrency.format(cart.taxAmount)})',
+                              cart.serviceCharge > 0
+                                  ? '(Subtotal: ${formatCurrency.format(cart.subtotal)} • Layanan: ${formatCurrency.format(cart.serviceCharge)})'
+                                  : '(Subtotal: ${formatCurrency.format(cart.subtotal)})',
                               style: const TextStyle(fontSize: 11, color: Colors.black54),
                             ),
                           ],
@@ -961,21 +963,12 @@ class _CashierPOSScreenState extends State<CashierPOSScreen> {
             ),
             child: Column(
               children: [
-                // Sebelum Pajak
+                // Subtotal
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Sebelum pajak', style: TextStyle(color: Colors.grey[700], fontSize: 13)),
+                    Text('Subtotal', style: TextStyle(color: Colors.grey[700], fontSize: 13)),
                     Text(formatCurrency.format(cart.subtotal), style: TextStyle(color: Colors.grey[800], fontSize: 13)),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                // Pajak (5%)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Pajak (5%)', style: TextStyle(color: Colors.grey[700], fontSize: 13)),
-                    Text(formatCurrency.format(cart.taxAmount), style: TextStyle(color: Colors.grey[800], fontSize: 13)),
                   ],
                 ),
                 const SizedBox(height: 6),

@@ -22,7 +22,7 @@ class HeldOrder {
 class CartProvider extends ChangeNotifier {
   final List<CartItem> _items = [];
   String _orderType = 'Dine In'; // 'Dine In' atau 'Take Away'
-  final double _taxRate = 0.05; // 5% Pajak (sesuai referensi UI)
+  final double _taxRate = 0.0; // Pajak dinonaktifkan (0%)
   final double _serviceCharge = 400.0; // Biaya layanan (sesuai referensi UI)
   final List<HeldOrder> _heldOrders = [];
 
@@ -33,9 +33,9 @@ class CartProvider extends ChangeNotifier {
 
   // Rincian Kalkulasi Harga
   double get subtotal => _items.fold(0, (sum, item) => sum + item.totalPrice);
-  double get taxAmount => subtotal * _taxRate;
+  double get taxAmount => 0.0;
   double get serviceCharge => _items.isEmpty ? 0.0 : _serviceCharge;
-  double get grandTotal => subtotal + taxAmount + serviceCharge;
+  double get grandTotal => subtotal + serviceCharge;
 
   void setOrderType(String type) {
     _orderType = type;
